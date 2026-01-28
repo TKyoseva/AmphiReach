@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="ar_robot">
+    <link name="hull_r">
+        <inertial>
+            <origin xyz="0.10107526881720418 7.105427357601002e-17 0.25" rpy="0.0 -0.0 0.0" />
+            <mass value="25.0" />
+            <inertia ixx="1.034" iyy="80.7" izz="80.7" ixy="-0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+        <visual name="hull_r_visual">
+            <origin xyz="-2.3000000000000003 -0.24999999999999994 0.15" rpy="-1.5707963267948966 2.0948433581365807e-64 0.0" />
+            <geometry>
+                <mesh filename="meshes/hull_r.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision name="hull_r_collision">
+            <origin xyz="-2.3000000000000003 -0.24999999999999994 0.15" rpy="-1.5707963267948966 2.0948433581365807e-64 0.0" />
+            <geometry>
+                <mesh filename="meshes/hull_r.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="base_link">
+        <inertial>
+            <origin xyz="0.4052896217502496 -0.031105551435536363 0.9899824383932293" rpy="0.0 -0.0 0.0" />
+            <mass value="120.0" />
+            <inertia ixx="36.0" iyy="149.0" izz="116.5" ixy="5.8" iyz="-0.14" ixz="1.86" />
+        </inertial>
+        <visual name="base_link_visual">
+            <origin xyz="-0.9999999999999999 -0.2 0.7000000000000001" rpy="-1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/base_link.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision name="base_link_collision">
+            <origin xyz="-0.9999999999999999 -0.2 0.7000000000000001" rpy="-1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/base_link.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    
+    <!-- Hydrodynamics Plugin for base_link (for underwater simulation) -->
+    <!-- Provides buoyancy and drag forces -->
+    <gazebo reference="base_link">
+        <plugin filename="gz-sim-hydrodynamics-system" name="gz::sim::systems::Hydrodynamics">
+            <link_name>base_link</link_name>
+            <water_level>0.0</water_level>
+            <water_density>997.0</water_density>
+            <water_velocity>0 0 0</water_velocity>
+            
+            <!-- Buoyancy parameters -->
+            <!-- Volume calculated from mass: 215 kg / 997 kg/m³ ≈ 0.216 m³ -->
+            <!-- Center of volume at approximate center of mass -->
+            <center_of_volume>0.4 0.0 1.0</center_of_volume>
+            <volume>0.216</volume>
+            
+            <!-- Drag coefficients (linear damping) -->
+            <!-- X-axis drag (surge) -->
+            <xDotU>100.0</xDotU>
+            <yDotV>100.0</yDotV>
+            <zDotW>100.0</zDotW>
+            
+            <!-- Rotational drag (angular damping) -->
+            <kDotP>50.0</kDotP>
+            <mDotQ>50.0</mDotQ>
+            <nDotR>50.0</nDotR>
+            
+            <!-- Quadratic drag coefficients (velocity squared damping) -->
+            <xUabsU>200.0</xUabsU>
+            <yVabsV>200.0</yVabsV>
+            <zWabsW>200.0</zWabsW>
+            <kPabsP>100.0</kPabsP>
+            <mQabsQ>100.0</mQabsQ>
+            <nRabsR>100.0</nRabsR>
+            
+            <!-- Additional linear drag terms -->
+            <xU>50.0</xU>
+            <yV>50.0</yV>
+            <zW>50.0</zW>
+            <kP>25.0</kP>
+            <mQ>25.0</mQ>
+            <nR>25.0</nR>
+        </plugin>
+    </gazebo>
+    <link name="hull_l">
+        <inertial>
+            <origin xyz="1.116385880717272 0.9500000000000001 0.25" rpy="0.0 0.0 0.0" />
+            <mass value="25.0" />
+            <inertia ixx="1.03" iyy="81.6" izz="81.6" ixy="0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+        <visual name="hull_l_visual">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/hull_l.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision name="hull_l_collision">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/hull_l.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="Lid">
+        <inertial>
+            <origin xyz="1.0517279261499726 0.22855881523943197 -0.03075096509327164" rpy="0.0 -0.0 0.0" />
+            <mass value="20.0" />
+            <inertia ixx="3.03" iyy="9.21" izz="6.93" ixy="-0.007" iyz="-0.029" ixz="-0.003" />
+        </inertial>
+        <visual name="Lid_visual">
+            <origin xyz="0.10000000000000014 0.0 -0.35000000000000003" rpy="-1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/Lid.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="yellow">
+                <color rgba="1.0 1.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision name="Lid_collision">
+            <origin xyz="0.10000000000000014 0.0 -0.35000000000000003" rpy="-1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/Lid.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="poll_l">
+        <inertial>
+            <origin xyz="1.4000000021396273 0.0 0.05000000099942362" rpy="0.0 -0.0 0.0" />
+            <mass value="12.5" />
+            <inertia ixx="0.052" iyy="9.14" izz="9.17" ixy="0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+        <visual name="poll_l_visual">
+            <origin xyz="-2.9300367597639663 0.1 -0.2989713470133005" rpy="1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/poll_l.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="green">
+                <color rgba="0.0 1.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision name="poll_l_collision">
+            <origin xyz="-2.9300367597639663 0.1 -0.2989713470133005" rpy="1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/poll_l.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="poll_r">
+        <inertial>
+            <origin xyz="1.4000000021396273 0.0 0.05" rpy="0.0 -0.0 0.0" />
+            <mass value="12.5" />
+            <inertia ixx="0.052" iyy="9.14" izz="9.17" ixy="0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+        <visual name="poll_r_visual">
+            <origin xyz="-3.7999999978603727 -0.1 -0.8" rpy="-1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/poll_r.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="green">
+                <color rgba="0.0 1.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision name="poll_r_collision">
+            <origin xyz="-3.7999999978603727 -0.1 -0.8" rpy="-1.5707963267948966 -0.0 0.0" />
+            <geometry>
+                <mesh filename="meshes/poll_r.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="base_link_Rigid-2" type="fixed">
+        <origin xyz="0.0 0.0 2.0" rpy="0.0 -0.0 0.0" />
+        <parent link="base_link" />
+        <child link="hull_r" />
+    </joint>
+    <joint name="hull_l_Rigid-4" type="fixed">
+        <origin xyz="1.0 0.7000000000000001 0.25" rpy="1.5707963267948966 -0.0 0.0" />
+        <parent link="hull_l" />
+        <child link="base_link" />
+    </joint>
+    <joint name="base_link_Revolute-5" type="continuous">
+        <origin xyz="-1.0 0.2 1.0" rpy="0.0 -0.0 0.0" />
+        <parent link="base_link" />
+        <child link="Lid" />
+        <axis xyz="0.0 0.0 1.0" />
+    </joint>
+    <joint name="base_link_Revolute-6" type="continuous">
+        <origin xyz="2.83004762 -0.15 0.40338482" rpy="3.141592653589793 -0.0 0.0" />
+        <parent link="base_link" />
+        <child link="poll_l" />
+        <axis xyz="0.0 0.0 1.0" />
+        <dynamics damping="0.1" friction="0.1"/>
+    </joint>
+    <joint name="base_link_Revolute-7" type="continuous">
+        <origin xyz="2.83004762 -0.15 1.5" rpy="0.0 -0.0 0.0" />
+        <parent link="base_link" />
+        <child link="poll_r" />
+        <axis xyz="0.0 0.0 1.0" />
+        <dynamics damping="0.1" friction="0.1"/>
+    </joint>
+
+    <!-- Left Motor (Stern, Port Side) -->
+    <link name="motor_left">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="5.0" />
+            <inertia ixx="0.015" iyy="0.015" izz="0.015" ixy="0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+        <visual name="motor_left_visual">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.1" length="0.2" />
+            </geometry>
+            <material name="motor_grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
+        </visual>
+        <collision name="motor_left_collision">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.1" length="0.2" />
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Right Motor (Stern, Starboard Side) -->
+    <link name="motor_right">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="5.0" />
+            <inertia ixx="0.015" iyy="0.015" izz="0.015" ixy="0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+        <visual name="motor_right_visual">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.1" length="0.2" />
+            </geometry>
+            <material name="motor_grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
+        </visual>
+        <collision name="motor_right_collision">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.1" length="0.2" />
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Left Motor Joint (Fixed to hull_l stern) -->
+    <joint name="motor_left_joint" type="fixed">
+        <origin xyz="-1.5 0.95 0.25" rpy="0 0 0" />
+        <parent link="hull_l" />
+        <child link="motor_left" />
+    </joint>
+
+    <!-- Right Motor Joint (Fixed to hull_r stern) -->
+    <joint name="motor_right_joint" type="fixed">
+        <origin xyz="-2.3 0.0 0.25" rpy="0 0 0" />
+        <parent link="hull_r" />
+        <child link="motor_right" />
+    </joint>
+
+    <!-- Gazebo-specific configuration for joint control -->
+    <gazebo reference="base_link_Revolute-5">
+        <implicitSpringDamper>true</implicitSpringDamper>
+        <provideFeedback>true</provideFeedback>
+    </gazebo>
+    <gazebo reference="base_link_Revolute-6">
+        <implicitSpringDamper>true</implicitSpringDamper>
+        <provideFeedback>true</provideFeedback>
+    </gazebo>
+    <gazebo reference="base_link_Revolute-7">
+        <implicitSpringDamper>true</implicitSpringDamper>
+        <provideFeedback>true</provideFeedback>
+    </gazebo>
+
+    <!-- Joint Position Controller Plugin (for gz-sim) -->
+    <!-- Note: This plugin may need to be added to the world file instead -->
+    <gazebo>
+        <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+            <joint_name>base_link_Revolute-5</joint_name>
+            <joint_name>base_link_Revolute-6</joint_name>
+            <joint_name>base_link_Revolute-7</joint_name>
+            <p_gain>10.0</p_gain>
+            <i_gain>0.0</i_gain>
+            <d_gain>1.0</d_gain>
+            <initial_position>0.0</initial_position>
+        </plugin>
+    </gazebo>
+
+    <!-- Left Motor Plugin - Applies force based on thrust command -->
+    <gazebo reference="motor_left">
+        <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands">
+            <!-- Motor will be controlled via ROS2 topics -->
+        </plugin>
+    </gazebo>
+
+    <!-- Right Motor Plugin - Applies force based on thrust command -->
+    <gazebo reference="motor_right">
+        <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands">
+            <!-- Motor will be controlled via ROS2 topics -->
+        </plugin>
+    </gazebo>
+</robot>

@@ -1,0 +1,101 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+venv/
+env/
+ENV/
+.venv
+
+# ROS
+build/
+install/
+log/
+.ros/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Data/Logs
+data/logs/
+*.log
+*.log.*
+
+# Fusion 360
+*.f3d.bak
+*.f3d.lock
+*.f3d.tmp
+
+# Large files (consider Git LFS)
+# *.zip
+# *.tar.gz
+# *.7z
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Compiled files
+*.o
+*.a
+*.lib
+*.dll
+*.exe
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.tox/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
